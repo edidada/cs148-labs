@@ -1,0 +1,43 @@
+name: HW6 Advanced Rendering
+on:
+  push:
+    branches: [edidada/hw6-advanced-rendering]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  passes:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Fetch pinned task tools and official scene
+        run: |
+          set -euo pipefail
+          mkdir -p assets .scripts evidence
+          curl --fail --location --retry 3 https://github.com/edidada/cs148-labs/releases/download/hw6-tools-bb5315b/hw6-tools-bb5315b.zip -o tools.zip
+          echo '3e8618796a895a22d76c35e4236a31c277c766685223bf0c881de2d28a47bd6e  tools.zip' | sha256sum -c -
+          unzip -q tools.zip -d .scripts
+          curl --fail --location --retry 3 --max-time 180 https://web.stanford.edu/class/cs148/hws/hw6/cornell_box.blend -o assets/cornell_box.blend
+          echo '267b808a404b9be94a63c9b01d3fab007ab90ebf0eca82679dafb0c70c5b47a2  assets/cornell_box.blend' | sha256sum -c -
+      - name: Install pinned Blender
+        run: |
+          set -euo pipefail
+          mkdir .wheels
+          python -m pip download --no-deps bpy==4.4.0 -d .wheels
+          echo '50ee92155cdb8740214fa3b29d9a45ee90cda9dc15eb978860916de468b8580f  .wheels/bpy-4.4.0-cp311-cp311-manylinux_2_28_x86_64.whl' | sha256sum -c -
+          python -m pip install numpy==2.2.6 .wheels/*.whl
+          python -m pip freeze > evidence/pip-freeze.txt
+          cp .scripts/provenance.json evidence/tools-provenance.json
+      - name: Render nine passes and verify linear reconstruction with corruptions
+        run: |
+          set -euo pipefail
+          python .scripts/py/render_cs148_passes.py assets/cornell_box.blend --output evidence/passes --samples 256 2>&1 | tee evidence/passes.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hw6-passes
+          path: evidence/
