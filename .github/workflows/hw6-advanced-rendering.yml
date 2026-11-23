@@ -105,3 +105,35 @@ jobs:
         with:
           name: hw6-dof
           path: evidence/
+  motion:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Fetch fixed fog task tools
+        run: |
+          set -euo pipefail
+          mkdir -p .scripts evidence .wheels
+          curl --fail --location --retry 3 https://github.com/edidada/cs148-labs/releases/download/hw6-motion-tools-9cb0a27/hw6-motion-tools-9cb0a27.zip -o fog-tools.zip
+          echo '6b3d2f74cf11aa987ff63a4c28fcf0b5106f088232579ac651d220f552fcfee3  fog-tools.zip' | sha256sum -c -
+          unzip -q fog-tools.zip -d .scripts
+          cp .scripts/provenance.json evidence/fog-tools-provenance.json
+      - name: Install pinned Blender
+        run: |
+          set -euo pipefail
+          python -m pip download --no-deps bpy==4.4.0 -d .wheels
+          echo '50ee92155cdb8740214fa3b29d9a45ee90cda9dc15eb978860916de468b8580f  .wheels/bpy-4.4.0-cp311-cp311-manylinux_2_28_x86_64.whl' | sha256sum -c -
+          python -m pip install numpy==2.2.6 .wheels/*.whl
+          python -m pip freeze > evidence/pip-freeze.txt
+      - name: Render non-Cornell frozen and moving train scenes
+        run: |
+          set -euo pipefail
+          python .scripts/py/render_cs148_motion.py --output evidence/motion 2>&1 | tee evidence/motion.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hw6-motion
+          path: evidence/

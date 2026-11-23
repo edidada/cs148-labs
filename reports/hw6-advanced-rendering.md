@@ -11,3 +11,7 @@
 ## 参与介质重建草稿（待实测）
 
 独立fog job使用集中脚本c735614e6386833f5c8e3bf3e59fa319d5b593e8的render_cs148_fog.py，创建非Cornell夜间路灯场景，保存有雾/无雾两份工程、640x426/128samples真实Cycles对照与线性像素差异。来源候选为Thomas Sørenes的Streetlight in fog (8187998658)，CC BY2.0：https://commons.wikimedia.org/wiki/File:Streetlight_in_fog_(8187998658).jpg 。原图下载429，未取得或逐图核对，当前仅为构图草稿，不能当作已完成参考重建。远端API、非黑图像、雾效质量与参考对应均待核验。
+
+## 运动模糊草稿（待实测）
+
+集中工具9cb0a27adab062317a8ffedcf383543d7db197b6的render_cs148_motion.py构造非Cornell列车/站台，24fps、第10帧、1帧快门、线性位置关键帧，分别冻结与真实Cycles时间采样；保存32位EXR/PNG/场景和曝光参数。参考获取及对应尚未完成，远端执行和实际图像待验证，不以差异数值代替合理模糊审查。
