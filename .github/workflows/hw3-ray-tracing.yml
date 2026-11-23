@@ -14,8 +14,8 @@ jobs:
       - name: Fetch task tools from fixed central commit
         run: |
           set -euo pipefail
-          curl --fail --location --retry 3 'https://github.com/edidada/cs148-labs/releases/download/hw3-tools-c3d2c73/cs148-hw3-tools-c3d2c73.zip' -o .tools.zip
-          echo '41f58465e77c40930091392fc35b4f0ee0ce0200a904c859231e6175ae3722c8  .tools.zip' | sha256sum -c -
+          curl --fail --location --retry 3 'https://github.com/edidada/cs148-labs/releases/download/hw3-tools-fb00feb/cs148-hw3-tools-fb00feb.zip' -o .tools.zip
+          echo '49b34fa0b731f35b4da3be69e25b4fd26082a8fdbe3fe6fd86a8da2916839de0  .tools.zip' | sha256sum -c -
           mkdir -p .scripts
           unzip -q .tools.zip -d .scripts
       - uses: actions/setup-python@v5
