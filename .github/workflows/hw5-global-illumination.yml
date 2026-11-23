@@ -1,0 +1,45 @@
+name: HW5 Global Illumination
+on:
+  push:
+    branches: [edidada/hw5-global-illumination]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  starter-audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: edidada/ai_agent_scripts
+          ref: 6601ecaa3239d1b05e087b9f42f9008b68a8828e
+          path: .scripts
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install pinned Blender wheel
+        run: |
+          set -euo pipefail
+          mkdir -p evidence assets .wheels
+          python -m pip download --no-deps bpy==4.4.0 -d .wheels
+          echo '50ee92155cdb8740214fa3b29d9a45ee90cda9dc15eb978860916de468b8580f  .wheels/bpy-4.4.0-cp311-cp311-manylinux_2_28_x86_64.whl' | sha256sum -c -
+          python -m pip install numpy==2.2.6 .wheels/*.whl
+          python -m pip freeze > evidence/pip-freeze.txt
+      - name: Download official starter
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 3 --max-time 180 'https://web.stanford.edu/class/cs148/hws/hw5/cs148-hw5-4_4.blend' -o assets/hw5-4_4.blend
+          echo '0540023e22bc01ed98be39e005ba86b837225bd14762077be8f970f5f9da9995  assets/hw5-4_4.blend' | sha256sum -c -
+      - name: Compare embedded Text with actual Blender API
+        run: |
+          set -euo pipefail
+          python .scripts/py/verify_cs148_starter.py assets/hw5-4_4.blend --output evidence/starter-audit.json 2>&1 | tee evidence/starter-audit.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hw5-starter-audit
+          path: |
+            evidence/
+            assets/hw5-4_4.blend
