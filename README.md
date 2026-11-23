@@ -1,9 +1,16 @@
 # CS148 自学实验
 
-来源为 Stanford CS148 Fall2026 [官方作业页](https://web.stanford.edu/class/cs148/assignments.html)。这是 edidada 自建的自学仓库，**不是官方 GitHub starter 的 fork**；目前没有核实到可 fork 的官方实验仓库。官方 `.blend` 下载地址与哈希须单独保留。
+来源为Stanford CS148 Fall2026 [官方作业页](https://web.stanford.edu/class/cs148/assignments.html)。这是edidada自建的自学仓库，**不是官方GitHub starter的fork**。官方.blend下载地址、完整SHA256与手册版本见各实验报告。
 
-Python 脚本统一放在 [ai_agent_scripts/py](https://github.com/edidada/ai_agent_scripts/tree/main/py)，课程 workflow 引用固定提交，不在本仓库另放 Python 源文件。所有 Blender、构建和课程实验仅在 GitHub Actions 运行。
+Python实现统一维护在[ai_agent_scripts/py](https://github.com/edidada/ai_agent_scripts/tree/main/py)，课程工作流使用固定来源及哈希的本任务工具附件；集中脚本库访问权限独立管理。所有Blender、构建和课程实验只在GitHub Actions运行。
 
-HW1–HW8 和最终项目均未验收完成。每个实验使用独立 `edidada/hwN-*` 分支与独立 workflow；场景导入或脚本注册成功只证明环境可用，不能替代题目要求的实现、图像和报告。
+## 实验入口
 
-HW5 当前工作分支：`edidada/hw5-global-illumination`。该分支先验证 Blender4.4 环境、官方场景及内嵌源码读取，再实现面积光源、多重采样、低差异采样和间接漫反射。详见分支内 `reports/hw5-global-illumination.md`。
+| 实验 | 独立分支 | 工作流 | 报告 |
+|---|---|---|---|
+| HW3 光线追踪 | [edidada/hw3-ray-tracing](https://github.com/edidada/cs148-labs/tree/edidada/hw3-ray-tracing) | [hw3-ray-tracing.yml](https://github.com/edidada/cs148-labs/blob/edidada/hw3-ray-tracing/.github/workflows/hw3-ray-tracing.yml) | [实验报告](https://github.com/edidada/cs148-labs/blob/edidada/hw3-ray-tracing/reports/hw3-ray-tracing.md) |
+| HW5 全局光照 | [edidada/hw5-global-illumination](https://github.com/edidada/cs148-labs/tree/edidada/hw5-global-illumination) | [hw5-global-illumination.yml](https://github.com/edidada/cs148-labs/blob/edidada/hw5-global-illumination/.github/workflows/hw5-global-illumination.yml) | [实验报告](https://github.com/edidada/cs148-labs/blob/edidada/hw5-global-illumination/reports/hw5-global-illumination.md) |
+
+工作分支保存独立实现和证据，main提供索引。HW3需七个960×540检查点，HW5需四组480×480、深度3、1/4/16样本渲染；成功加载场景不等于实验完成。实际提交、Actions运行号、工件核验与未完成列表以[跨机台账todo.md](https://github.com/edidada/langnote/blob/master/todo.md)为准。其余HW1、HW2、HW4、HW6、HW7、HW8及最终项目仍未完成；现场演示/问答无法由自学自动检查代替。
+
+复现示例：先检出相应分支，再从Actions页手动执行对应workflow。工件可按报告运行号下载：`gh run download RUN_ID --repo edidada/cs148-labs`。每阶段包含实际图像、线性数组、完成.blend、配置、哈希和日志。不得将一个阶段成功或报告前的旧绿灯当成最终提交完成。
