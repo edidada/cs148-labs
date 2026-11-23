@@ -137,3 +137,24 @@ jobs:
         with:
           name: hw6-motion
           path: evidence/
+  references:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download candidate reference photos with provenance
+        run: |
+          set -euo pipefail
+          mkdir -p evidence/references
+          cp references/hw6-candidates.tsv evidence/references/
+          while IFS=$'\t' read -r kind id author page; do
+            curl --fail --location --retry 2 --max-time 90 "https://images.pexels.com/photos/$id/pexels-photo-$id.jpeg?auto=compress&w=1280" -o "evidence/references/$kind.jpg"
+            file "evidence/references/$kind.jpg" | tee -a evidence/references/file-types.txt
+            test "$(head -c 2 "evidence/references/$kind.jpg" | od -An -tx1 | tr -d ' \n')" = ffd8
+            sha256sum "evidence/references/$kind.jpg" >> evidence/references/sha256.txt
+          done < references/hw6-candidates.tsv
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hw6-reference-candidates
+          path: evidence/references/
