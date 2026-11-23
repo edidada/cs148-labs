@@ -1,0 +1,129 @@
+name: HW3 Ray Tracing
+on:
+  push:
+    branches: [edidada/hw3-ray-tracing]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  hw3:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fetch task tools from fixed central commit
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 3 'https://github.com/edidada/cs148-labs/releases/download/hw3-tools-c3d2c73/cs148-hw3-tools-c3d2c73.zip' -o .tools.zip
+          echo '41f58465e77c40930091392fc35b4f0ee0ce0200a904c859231e6175ae3722c8  .tools.zip' | sha256sum -c -
+          mkdir -p .scripts
+          unzip -q .tools.zip -d .scripts
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install pinned Blender wheel
+        run: |
+          set -euo pipefail
+          mkdir -p evidence assets .wheels
+          python -m pip download --no-deps bpy==4.4.0 -d .wheels
+          echo '50ee92155cdb8740214fa3b29d9a45ee90cda9dc15eb978860916de468b8580f  .wheels/bpy-4.4.0-cp311-cp311-manylinux_2_28_x86_64.whl' | sha256sum -c -
+          python -m pip install numpy==2.2.6 .wheels/*.whl
+          python -m pip freeze > evidence/pip-freeze.txt
+          cp .scripts/provenance.json evidence/tools-provenance.json
+      - name: Download official starter
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 3 --max-time 180 'https://web.stanford.edu/class/cs148/hws/hw3/cs148-hw3-blender4_4.blend' -o assets/hw3-4_4.blend
+          echo '68edaa67bc3e50acfe83a4781f2e751ea34264b383b84da969cfcc4358835da7  assets/hw3-4_4.blend' | sha256sum -c -
+      - name: Verify numerical contracts and six controlled corruptions
+        run: |
+          set -euo pipefail
+          python .scripts/py/run_cs148_hw3.py assets/hw3-4_4.blend --output evidence/numerical --mode verify 2>&1 | tee evidence/numerical.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hw3-numerical
+          path: evidence/
+      - name: Render checkpoint 1 at 960x540 depth3
+        run: |
+          set -euo pipefail
+          python .scripts/py/run_cs148_hw3.py assets/hw3-4_4.blend --output evidence/checkpoint-1 --mode render --checkpoint 1 2>&1 | tee evidence/checkpoint-1.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hw3-checkpoint-1
+          path: |
+            evidence/checkpoint-1/
+            evidence/checkpoint-1.log
+
+      - name: Render checkpoint 2a at 960x540 depth3
+        run: |
+          set -euo pipefail
+          python .scripts/py/run_cs148_hw3.py assets/hw3-4_4.blend --output evidence/checkpoint-2a --mode render --checkpoint 2a 2>&1 | tee evidence/checkpoint-2a.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hw3-checkpoint-2a
+          path: |
+            evidence/checkpoint-2a/
+            evidence/checkpoint-2a.log
+
+      - name: Render checkpoint 2b at 960x540 depth3
+        run: |
+          set -euo pipefail
+          python .scripts/py/run_cs148_hw3.py assets/hw3-4_4.blend --output evidence/checkpoint-2b --mode render --checkpoint 2b 2>&1 | tee evidence/checkpoint-2b.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hw3-checkpoint-2b
+          path: |
+            evidence/checkpoint-2b/
+            evidence/checkpoint-2b.log
+
+      - name: Render checkpoint 3 at 960x540 depth3
+        run: |
+          set -euo pipefail
+          python .scripts/py/run_cs148_hw3.py assets/hw3-4_4.blend --output evidence/checkpoint-3 --mode render --checkpoint 3 2>&1 | tee evidence/checkpoint-3.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hw3-checkpoint-3
+          path: |
+            evidence/checkpoint-3/
+            evidence/checkpoint-3.log
+
+      - name: Render checkpoint 4 at 960x540 depth3
+        run: |
+          set -euo pipefail
+          python .scripts/py/run_cs148_hw3.py assets/hw3-4_4.blend --output evidence/checkpoint-4 --mode render --checkpoint 4 2>&1 | tee evidence/checkpoint-4.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hw3-checkpoint-4
+          path: |
+            evidence/checkpoint-4/
+            evidence/checkpoint-4.log
+
+      - name: Render checkpoint 5 at 960x540 depth3
+        run: |
+          set -euo pipefail
+          python .scripts/py/run_cs148_hw3.py assets/hw3-4_4.blend --output evidence/checkpoint-5 --mode render --checkpoint 5 2>&1 | tee evidence/checkpoint-5.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hw3-checkpoint-5
+          path: |
+            evidence/checkpoint-5/
+            evidence/checkpoint-5.log
+
+      - name: Render checkpoint 6 at 960x540 depth3
+        run: |
+          set -euo pipefail
+          python .scripts/py/run_cs148_hw3.py assets/hw3-4_4.blend --output evidence/checkpoint-6 --mode render --checkpoint 6 2>&1 | tee evidence/checkpoint-6.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hw3-checkpoint-6
+          path: |
+            evidence/checkpoint-6/
+            evidence/checkpoint-6.log
