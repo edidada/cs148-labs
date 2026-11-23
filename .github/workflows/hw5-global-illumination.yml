@@ -11,11 +11,13 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/checkout@v4
-        with:
-          repository: edidada/ai_agent_scripts
-          ref: 6601ecaa3239d1b05e087b9f42f9008b68a8828e
-          path: .scripts
+      - name: Fetch task tools from fixed central commit
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 3 'https://github.com/edidada/cs148-labs/releases/download/hw5-tools-6601eca/cs148-hw5-tools-6601eca.zip' -o .tools.zip
+          echo 'b3a1e6f35fb9107010d4486eeeed0825a117835708620cbb638c9504e871aeae  .tools.zip' | sha256sum -c -
+          mkdir -p .scripts
+          unzip -q .tools.zip -d .scripts
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -27,6 +29,7 @@ jobs:
           echo '50ee92155cdb8740214fa3b29d9a45ee90cda9dc15eb978860916de468b8580f  .wheels/bpy-4.4.0-cp311-cp311-manylinux_2_28_x86_64.whl' | sha256sum -c -
           python -m pip install numpy==2.2.6 .wheels/*.whl
           python -m pip freeze > evidence/pip-freeze.txt
+          cp .scripts/provenance.json evidence/tools-provenance.json
       - name: Download official starter
         run: |
           set -euo pipefail
