@@ -41,3 +41,35 @@ jobs:
         with:
           name: hw6-passes
           path: evidence/
+  fog:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Fetch fixed fog task tools
+        run: |
+          set -euo pipefail
+          mkdir -p .scripts evidence .wheels
+          curl --fail --location --retry 3 https://github.com/edidada/cs148-labs/releases/download/hw6-fog-tools-c735614/hw6-fog-tools-c735614.zip -o fog-tools.zip
+          echo 'c903372b94f5203a508a1094ea8d1974ef50c960eee2468bb69ee2e7b9b993d1  fog-tools.zip' | sha256sum -c -
+          unzip -q fog-tools.zip -d .scripts
+          cp .scripts/provenance.json evidence/fog-tools-provenance.json
+      - name: Install pinned Blender
+        run: |
+          set -euo pipefail
+          python -m pip download --no-deps bpy==4.4.0 -d .wheels
+          echo '50ee92155cdb8740214fa3b29d9a45ee90cda9dc15eb978860916de468b8580f  .wheels/bpy-4.4.0-cp311-cp311-manylinux_2_28_x86_64.whl' | sha256sum -c -
+          python -m pip install numpy==2.2.6 .wheels/*.whl
+          python -m pip freeze > evidence/pip-freeze.txt
+      - name: Render non-Cornell clear and fog scenes
+        run: |
+          set -euo pipefail
+          python .scripts/py/render_cs148_fog.py --output evidence/fog 2>&1 | tee evidence/fog.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hw6-fog
+          path: evidence/
