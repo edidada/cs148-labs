@@ -10,7 +10,6 @@ Python实现统一维护在[ai_agent_scripts/py](https://github.com/edidada/ai_a
 |---|---|---|---|
 | HW3 光线追踪 | [edidada/hw3-ray-tracing](https://github.com/edidada/cs148-labs/tree/edidada/hw3-ray-tracing) | [hw3-ray-tracing.yml](https://github.com/edidada/cs148-labs/blob/edidada/hw3-ray-tracing/.github/workflows/hw3-ray-tracing.yml) | [实验报告](https://github.com/edidada/cs148-labs/blob/edidada/hw3-ray-tracing/reports/hw3-ray-tracing.md) |
 | HW5 全局光照 | [edidada/hw5-global-illumination](https://github.com/edidada/cs148-labs/tree/edidada/hw5-global-illumination) | [hw5-global-illumination.yml](https://github.com/edidada/cs148-labs/blob/edidada/hw5-global-illumination/.github/workflows/hw5-global-illumination.yml) | [实验报告](https://github.com/edidada/cs148-labs/blob/edidada/hw5-global-illumination/reports/hw5-global-illumination.md) |
-
 | HW6 高级渲染 | [edidada/hw6-advanced-rendering](https://github.com/edidada/cs148-labs/tree/edidada/hw6-advanced-rendering) | [hw6-advanced-rendering.yml](https://github.com/edidada/cs148-labs/blob/edidada/hw6-advanced-rendering/.github/workflows/hw6-advanced-rendering.yml) | [实验报告](https://github.com/edidada/cs148-labs/blob/edidada/hw6-advanced-rendering/reports/hw6-advanced-rendering.md) |
 
 工作分支保存独立实现和证据，main提供索引。HW3需七个960×540检查点，HW5需四组480×480、深度3、1/4/16样本渲染；成功加载场景不等于实验完成。实际提交、Actions运行号、工件核验与未完成列表以[跨机台账todo.md](https://github.com/edidada/langnote/blob/master/todo.md)为准。HW6已实现九通道与三组参考场景对照，最终报告提交仍待全量工件复核；其余HW1、HW2、HW4、HW7、HW8及最终项目仍未完成；现场演示/问答无法由自学自动检查代替。
