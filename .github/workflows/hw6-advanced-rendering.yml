@@ -53,8 +53,8 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p .scripts evidence .wheels
-          curl --fail --location --retry 3 https://github.com/edidada/cs148-labs/releases/download/hw6-scene-tools-eb55f1c/hw6-scene-tools-eb55f1c.zip -o fog-tools.zip
-          echo '61caa336a134895f4098a1267c223c3c9ff7ae19d91557bbf07a73e556495488  fog-tools.zip' | sha256sum -c -
+          curl --fail --location --retry 3 https://github.com/edidada/cs148-labs/releases/download/hw6-scene-tools-382a13c/hw6-scene-tools-382a13c.zip -o fog-tools.zip
+          echo '6b867966f2657852abf2a82dd9a206648755123d7f1ffd66d1053feff5583b97  fog-tools.zip' | sha256sum -c -
           unzip -q fog-tools.zip -d .scripts
           cp .scripts/provenance.json evidence/fog-tools-provenance.json
       - name: Install pinned Blender
@@ -85,8 +85,8 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p .scripts evidence .wheels
-          curl --fail --location --retry 3 https://github.com/edidada/cs148-labs/releases/download/hw6-scene-tools-f180d18/hw6-scene-tools-f180d18.zip -o fog-tools.zip
-          echo '08104d2eefe4eb30800e8f7c128fb0ce9b6027c3b8efb2093d081d27435d4c7b  fog-tools.zip' | sha256sum -c -
+          curl --fail --location --retry 3 https://github.com/edidada/cs148-labs/releases/download/hw6-scene-tools-382a13c/hw6-scene-tools-382a13c.zip -o fog-tools.zip
+          echo '6b867966f2657852abf2a82dd9a206648755123d7f1ffd66d1053feff5583b97  fog-tools.zip' | sha256sum -c -
           unzip -q fog-tools.zip -d .scripts
           cp .scripts/provenance.json evidence/fog-tools-provenance.json
       - name: Install pinned Blender
@@ -117,8 +117,8 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p .scripts evidence .wheels
-          curl --fail --location --retry 3 https://github.com/edidada/cs148-labs/releases/download/hw6-motion-tools-9cb0a27/hw6-motion-tools-9cb0a27.zip -o fog-tools.zip
-          echo '6b3d2f74cf11aa987ff63a4c28fcf0b5106f088232579ac651d220f552fcfee3  fog-tools.zip' | sha256sum -c -
+          curl --fail --location --retry 3 https://github.com/edidada/cs148-labs/releases/download/hw6-scene-tools-382a13c/hw6-scene-tools-382a13c.zip -o fog-tools.zip
+          echo '6b867966f2657852abf2a82dd9a206648755123d7f1ffd66d1053feff5583b97  fog-tools.zip' | sha256sum -c -
           unzip -q fog-tools.zip -d .scripts
           cp .scripts/provenance.json evidence/fog-tools-provenance.json
       - name: Install pinned Blender
