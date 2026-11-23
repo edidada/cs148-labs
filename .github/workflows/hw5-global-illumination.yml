@@ -6,16 +6,16 @@ on:
 permissions:
   contents: read
 jobs:
-  starter-audit:
+  hw5:
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 360
     steps:
       - uses: actions/checkout@v4
       - name: Fetch task tools from fixed central commit
         run: |
           set -euo pipefail
-          curl --fail --location --retry 3 'https://github.com/edidada/cs148-labs/releases/download/hw5-tools-6601eca/cs148-hw5-tools-6601eca.zip' -o .tools.zip
-          echo 'b3a1e6f35fb9107010d4486eeeed0825a117835708620cbb638c9504e871aeae  .tools.zip' | sha256sum -c -
+          curl --fail --location --retry 3 'https://github.com/edidada/cs148-labs/releases/download/hw5-tools-5ac95c6/cs148-hw5-tools-5ac95c6.zip' -o .tools.zip
+          echo 'c99c45348aa741f3d46037cc66a6a03213b9349e31d8eaf9fbaab94714ac5bff  .tools.zip' | sha256sum -c -
           mkdir -p .scripts
           unzip -q .tools.zip -d .scripts
       - uses: actions/setup-python@v5
@@ -46,3 +46,58 @@ jobs:
           path: |
             evidence/
             assets/hw5-4_4.blend
+      - name: Numerical contracts and five controlled corruptions
+        run: |
+          set -euo pipefail
+          python .scripts/py/run_cs148_hw5.py assets/hw5-4_4.blend --output evidence/numerical --mode verify 2>&1 | tee evidence/numerical.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hw5-numerical
+          path: |
+            evidence/numerical/
+            evidence/numerical.log
+      - name: Area light 480x480 depth3 sample1
+        run: |
+          set -euo pipefail
+          python .scripts/py/run_cs148_hw5.py assets/hw5-4_4.blend --output evidence/area-single --mode render --stage area-single 2>&1 | tee evidence/area-single.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hw5-area-single
+          path: |
+            evidence/area-single/
+            evidence/area-single.log
+      - name: Area light 480x480 depth3 sample4
+        run: |
+          set -euo pipefail
+          python .scripts/py/run_cs148_hw5.py assets/hw5-4_4.blend --output evidence/area-four --mode render --stage area-four 2>&1 | tee evidence/area-four.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hw5-area-four
+          path: |
+            evidence/area-four/
+            evidence/area-four.log
+      - name: Corput 480x480 depth3 sample4
+        run: |
+          set -euo pipefail
+          python .scripts/py/run_cs148_hw5.py assets/hw5-4_4.blend --output evidence/corput-four --mode render --stage corput-four 2>&1 | tee evidence/corput-four.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hw5-corput-four
+          path: |
+            evidence/corput-four/
+            evidence/corput-four.log
+      - name: Indirect diffuse 480x480 depth3 sample16
+        run: |
+          set -euo pipefail
+          python .scripts/py/run_cs148_hw5.py assets/hw5-4_4.blend --output evidence/indirect-sixteen --mode render --stage indirect-sixteen 2>&1 | tee evidence/indirect-sixteen.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hw5-indirect-sixteen
+          path: |
+            evidence/indirect-sixteen/
+            evidence/indirect-sixteen.log
