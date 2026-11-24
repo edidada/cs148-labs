@@ -18,8 +18,8 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p .scripts .wheels evidence
-          curl --fail --location --retry 3 https://github.com/edidada/cs148-labs/releases/download/hw7-modeling-tools/hw7-modeling-tools.zip -o tools.zip
-          echo 'ad6f8f38bd97df03a80d6bacfe2d49b41411080a87c12ce48151c699405b3b6e  tools.zip' | sha256sum -c -
+          curl --fail --location --retry 3 https://github.com/edidada/cs148-labs/releases/download/hw7-capped-tools/hw7-capped-tools.zip -o tools.zip
+          echo '8724518644f50aa3c1db0f134e861497c5045291da395ca26bbb527d710fa59e  tools.zip' | sha256sum -c -
           unzip -q tools.zip -d .scripts
           cp .scripts/provenance.json evidence/tools-provenance.json
           cp reports/hw7-sketch.svg evidence/
