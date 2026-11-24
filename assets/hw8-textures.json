@@ -1,0 +1,74 @@
+[
+  {
+    "asset": "wood_table_001",
+    "role": "base_color",
+    "file": "wood_table_001-base_color.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/wood_table_001/wood_table_001_diff_1k.jpg",
+    "bytes": 215573,
+    "sha256": "460dd08d240f4a1f02982415048c3c5c200f385db212da18dc7e2df68bf4d0be",
+    "provider_md5": "56652a7339b16a76afad20d3585f66ea",
+    "reference": "https://polyhaven.com/a/wood_table_001",
+    "license": "CC0",
+    "license_url": "https://polyhaven.com/license"
+  },
+  {
+    "asset": "wood_table_001",
+    "role": "normal",
+    "file": "wood_table_001-normal.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/wood_table_001/wood_table_001_nor_gl_1k.jpg",
+    "bytes": 51927,
+    "sha256": "9bf7ddf5721e225c20290f1772ae37f9bdfd49658f6d458259eb794e2149d3cf",
+    "provider_md5": "6360e09967add8baecaa5ecc55fb5e03",
+    "reference": "https://polyhaven.com/a/wood_table_001",
+    "license": "CC0",
+    "license_url": "https://polyhaven.com/license"
+  },
+  {
+    "asset": "wood_table_001",
+    "role": "roughness",
+    "file": "wood_table_001-roughness.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/wood_table_001/wood_table_001_rough_1k.jpg",
+    "bytes": 237261,
+    "sha256": "a2ca9ae89dfe7b8e2e5e92f0aa43467845417de8a50205b5852ef0d57c7624f9",
+    "provider_md5": "05b60bd20a1cc4355c5d73a99b245d44",
+    "reference": "https://polyhaven.com/a/wood_table_001",
+    "license": "CC0",
+    "license_url": "https://polyhaven.com/license"
+  },
+  {
+    "asset": "fabric_pattern_07",
+    "role": "base_color",
+    "file": "fabric_pattern_07-base_color.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/fabric_pattern_07/fabric_pattern_07_col_1_1k.jpg",
+    "bytes": 788593,
+    "sha256": "aeb7a1487b77aec55e39de662def4d371f5c7c617f62d1f291d7f9932ffebdc9",
+    "provider_md5": "c82406b5ac4086b14db6b3ad9c84946f",
+    "reference": "https://polyhaven.com/a/fabric_pattern_07",
+    "license": "CC0",
+    "license_url": "https://polyhaven.com/license"
+  },
+  {
+    "asset": "fabric_pattern_07",
+    "role": "normal",
+    "file": "fabric_pattern_07-normal.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/fabric_pattern_07/fabric_pattern_07_nor_gl_1k.jpg",
+    "bytes": 828071,
+    "sha256": "f6955bbdead9f023f2357f6f8808ed49627d10882cd2a3cb6b5a5ace155abc45",
+    "provider_md5": "cdbbc2ebe5d75f6edd66ba090f3be49f",
+    "reference": "https://polyhaven.com/a/fabric_pattern_07",
+    "license": "CC0",
+    "license_url": "https://polyhaven.com/license"
+  },
+  {
+    "asset": "fabric_pattern_07",
+    "role": "roughness",
+    "file": "fabric_pattern_07-roughness.jpg",
+    "url": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/fabric_pattern_07/fabric_pattern_07_rough_1k.jpg",
+    "bytes": 488744,
+    "sha256": "3d90ac40b5c32a15649cc8525b7eeed133ea46b63a0e3eae5e34911d5c967e3a",
+    "provider_md5": "28f47eb9de3e4ebe1dc519f601335fc4",
+    "reference": "https://polyhaven.com/a/fabric_pattern_07",
+    "license": "CC0",
+    "license_url": "https://polyhaven.com/license"
+  }
+]

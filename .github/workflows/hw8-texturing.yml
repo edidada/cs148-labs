@@ -1,0 +1,59 @@
+name: HW8 Texturing
+on:
+  push:
+    branches: [edidada/hw8-texturing]
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  texturing:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Fetch exact HW7 scene artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: hw7-modeling
+          run-id: 45402760046
+          github-token: ${{ github.token }}
+          path: .base
+      - name: Fetch fixed texture tools
+        run: |
+          set -euo pipefail
+          mkdir -p .scripts .wheels evidence
+          curl --fail --location --retry 3 https://github.com/edidada/cs148-labs/releases/download/hw8-verified-tools/hw8-verified-tools.zip -o tools.zip
+          echo 'c8805e50dc4694628b3195235cdb49c1c259d3479c28b28c9bd1a5882b235f5a  tools.zip' | sha256sum -c -
+          unzip -q tools.zip -d .scripts
+          cp .scripts/provenance.json evidence/tools-provenance.json
+          cp assets/hw8-textures.json evidence/texture-manifest.json
+      - name: Install pinned Blender
+        run: |
+          set -euo pipefail
+          python -m pip download --no-deps bpy==4.4.0 -d .wheels
+          echo '50ee92155cdb8740214fa3b29d9a45ee90cda9dc15eb978860916de468b8580f  .wheels/bpy-4.4.0-cp311-cp311-manylinux_2_28_x86_64.whl' | sha256sum -c -
+          python -m pip install numpy==2.2.6 .wheels/*.whl
+          python -m pip freeze > evidence/pip-freeze.txt
+      - name: Unwrap, corrupt and restore maps, render actual Cycles prototype
+        run: |
+          set -euo pipefail
+          python .scripts/py/render_cs148_texturing.py .base/modeling/tea-table.blend --manifest assets/hw8-textures.json --output evidence/texturing 2>&1 | tee evidence/texturing.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hw8-review
+          path: |
+            evidence/texturing/*.png
+            evidence/texturing/*.json
+            evidence/texturing/*.svg
+            evidence/tools-provenance.json
+            evidence/texture-manifest.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hw8-complete
+          path: evidence/
