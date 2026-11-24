@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="640" viewBox="0 0 960 640">
+<rect width="960" height="640" fill="#f7f2e8"/>
+<g font-family="sans-serif" fill="#263d40" font-size="22">
+<text x="40" y="42">HW7 / HW8 project: Window-side tea table</text>
+<text x="40" y="75" font-size="17">Composition plan before modeling; diagram, not a rendered image</text>
+<path d="M130 440 L620 470 L835 280 L370 260 Z" fill="#caa67c" stroke="#574f43" stroke-width="3"/>
+<path d="M70 110 L215 110 L215 350 L70 350 Z M140 110 L140 350 M70 230 L215 230" fill="none" stroke="#617c85" stroke-width="10"/>
+<text x="50" y="390">Window / soft area light</text>
+<path d="M340 300 L350 390 Q390 420 425 388 L435 300 M435 315 Q485 315 472 360 Q463 380 428 370" fill="#80b2a0" stroke="#315e55" stroke-width="4"/>
+<ellipse cx="387" cy="300" rx="48" ry="16" fill="#42695e"/>
+<text x="265" y="460">Cup: modeled body + handle</text>
+<path d="M605 300 L605 220 L626 185 L626 145 L650 145 L650 185 L674 220 L674 300 Z" fill="#d1e6e7" stroke="#59767f" stroke-width="3"/>
+<text x="660" y="175">Glass bottle</text>
+<path d="M485 366 L585 377 L655 332 L550 324 Z" fill="#973e45" stroke="#533439" stroke-width="4"/>
+<text x="615" y="410">Book: HW8 UV target</text>
+<text x="45" y="530">Camera: front-right, aimed at cup; shallow depth of field</text>
+<text x="45" y="570">Materials: celadon ceramic / clear glass / matte wood / paper</text>
+<text x="45" y="610">HW8 continues this scene with separate cup and book UV layouts</text>
+</g></svg>

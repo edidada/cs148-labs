@@ -1,0 +1,41 @@
+name: HW7 Geometric Modeling
+on:
+  push:
+    branches: [edidada/hw7-geometric-modeling]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  modeling:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Fetch fixed task source
+        run: |
+          set -euo pipefail
+          mkdir -p .scripts .wheels evidence
+          curl --fail --location --retry 3 https://github.com/edidada/cs148-labs/releases/download/hw7-modeling-tools/hw7-modeling-tools.zip -o tools.zip
+          echo 'ad6f8f38bd97df03a80d6bacfe2d49b41411080a87c12ce48151c699405b3b6e  tools.zip' | sha256sum -c -
+          unzip -q tools.zip -d .scripts
+          cp .scripts/provenance.json evidence/tools-provenance.json
+          cp reports/hw7-sketch.svg evidence/
+      - name: Install pinned Blender
+        run: |
+          set -euo pipefail
+          python -m pip download --no-deps bpy==4.4.0 -d .wheels
+          echo '50ee92155cdb8740214fa3b29d9a45ee90cda9dc15eb978860916de468b8580f  .wheels/bpy-4.4.0-cp311-cp311-manylinux_2_28_x86_64.whl' | sha256sum -c -
+          python -m pip install numpy==2.2.6 .wheels/*.whl
+          python -m pip freeze > evidence/pip-freeze.txt
+      - name: Build prototype and render actual Cycles comparisons
+        run: |
+          set -euo pipefail
+          python .scripts/py/render_cs148_modeling.py --output evidence/modeling 2>&1 | tee evidence/modeling.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hw7-modeling
+          path: evidence/
