@@ -26,3 +26,7 @@ UV Map节点显式连接三个Image Texture的Vector。颜色使用sRGB，法线
 独立 `hw8-texturing.yml` 调用集中 `ai_agent_scripts/py/render_cs148_texturing.py` 的固定任务包；仅在Actions使用Blender4.4.0/NumPy2.2.6 CPU Cycles。输出960×540的UV棋盘格（32 samples）、整体原型和木纹/织物局部图（64 samples），以及EXR、带贴图.blend、UV布局、真实耗时、SHA及负例记录。小型review工件与完整工件分别上传。
 
 当前仅实现并做AST检查，尚未取得本HW8的远程运行结果。需要下载工件、逐项核hash、实际查看四幅图和两张UV布局，再写实测结果与局限。后续项目计划：修正可能的纹理拉伸/比例，完善窗外背景和桌面细节，按最终项目完整手册逐项补齐要求，提升采样并检查噪点；不预设这些已经完成，也不以本原型代替最终项目。
+
+## 首轮失败与修复
+
+4e026e4/run45407236482已失败：已通过固定场景身份、UV展开/节点校验及两项负例检查，在创建棋盘格时遇到`BlendDataImages.new()`不接受`generated_type`关键字。修复为先创建图像，再设置`image.generated_type`，集中源码ff0da8c；另将负例记录提前保存，后续失败也可审计。原日志的NumPy/audio导入警告后程序继续执行并读取场景，实际终止点是上述TypeError。修正版完整渲染仍待验证。

@@ -26,8 +26,8 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p .scripts .wheels evidence
-          curl --fail --location --retry 3 https://github.com/edidada/cs148-labs/releases/download/hw8-verified-tools/hw8-verified-tools.zip -o tools.zip
-          echo 'c8805e50dc4694628b3195235cdb49c1c259d3479c28b28c9bd1a5882b235f5a  tools.zip' | sha256sum -c -
+          curl --fail --location --retry 3 https://github.com/edidada/cs148-labs/releases/download/hw8-checker-tools/hw8-checker-tools.zip -o tools.zip
+          echo 'dde46d5f17cd7a7ae61524d14ef48178e6b54d3b20113d5b37707b7e5d34ff82  tools.zip' | sha256sum -c -
           unzip -q tools.zip -d .scripts
           cp .scripts/provenance.json evidence/tools-provenance.json
           cp assets/hw8-textures.json evidence/texture-manifest.json
